@@ -9,9 +9,6 @@ export default {
     typeorm: {
         dataSource: {
             default: {
-                /**
-                 * 单数据库实例
-                 */
                 type: 'mysql',
                 host: '127.0.0.1',
                 port: 3306,
