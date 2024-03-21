@@ -15,4 +15,11 @@ export class APIController {
     const user = await this.userService.getUser({ uid });
     return { success: true, message: 'OK', data: user };
   }
+
+  @Get('/getAllUser')
+  async getAllUser(@Query('uid') uid) {
+    const count = await this.userService.getAllUser();
+    return { success: true, message: 'OK', data: count };
+  }
+
 }
