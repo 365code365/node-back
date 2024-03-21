@@ -7,12 +7,10 @@ import {UserEntity} from "../entity/user.entity";
 export class LoginController {
 
 
-
-
-    @Post('/login')
-    async  login(@Body() body:UserEntity){
-        console.log('body',body)
-        return body
-    }
+  @Post('/login')
+  async login(@Body() body: UserEntity) {
+    console.log('body', body)
+    return body
+  }
 
 }
