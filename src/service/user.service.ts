@@ -1,6 +1,6 @@
 import {Provide} from '@midwayjs/core';
 import {IUserOptions} from '../interface';
-import {UserEntity} from "../entity/user.entity";
+import {UserEntity} from "../entity/User.entity";
 import {Repository} from "typeorm";
 import {InjectEntityModel} from "@midwayjs/typeorm";
 
