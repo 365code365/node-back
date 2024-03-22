@@ -18,9 +18,11 @@ export default {
                 synchronize: false,
                 logging: false,
                 entities: [
-                    '**/entity/*.entity{.ts,.js}'
+                    '**/entity/*.entity{.ts,.js}',
+                    '**/entity/**/*.entity{.ts,.js}'
                 ]
             }
         }
-    }
+    },
+    middleware:['errorHandler']
 } as MidwayConfig;

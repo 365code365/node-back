@@ -7,6 +7,8 @@ import { join } from 'path';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
 import * as orm from '@midwayjs/typeorm';
+import {ResultMiddleware} from "./aware/ResultMiddleware";
+import {SystemErrorFilter} from "./filter/systemError.filter";
 
 @Configuration({
   imports: [
@@ -26,8 +28,8 @@ export class MainConfiguration {
 
   async onReady() {
     // add middleware
-    this.app.useMiddleware([ReportMiddleware]);
+    this.app.useMiddleware([ReportMiddleware,ResultMiddleware]);
     // add filter
-    // this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+    this.app.useFilter([SystemErrorFilter]);
   }
 }

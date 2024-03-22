@@ -1,8 +1,10 @@
 import {Provide} from '@midwayjs/core';
 import {IUserOptions} from '../interface';
-import {UserEntity} from "../entity/User.entity";
-import {Repository} from "typeorm";
+import {UserEntity} from "../entity/plat/User.entity";
+import {FindOneOptions, Repository} from "typeorm";
 import {InjectEntityModel} from "@midwayjs/typeorm";
+import {CustomError} from "../exception/CustomError";
+import {ErrorCode, ErrorType} from "../constant/ErrorCode";
 
 @Provide()
 export class UserService {
@@ -21,8 +23,26 @@ export class UserService {
     }
 
 
+    async login(body: UserEntity) {
+
+        let option: FindOneOptions<UserEntity> = {
+            where: {
+                'FullName': body.FullName,
+                'PasswordHash': body.PasswordHash
+            }
+        }
+        let res = await this.userEntity.findOne(option)
+
+        if (res == null) {
+            throw new CustomError(ErrorType.NOT_FUND_USER, ErrorCode.NOT_FUND_USER)
+        }
+
+        return res
+    }
+
+
     async getAllUser() {
-        const  count = await this.userEntity.count()
+        const count = await this.userEntity.count()
         return count
     }
 }
