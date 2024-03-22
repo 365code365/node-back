@@ -2,10 +2,11 @@ import {Controller, Inject, Post} from "@midwayjs/core";
 import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
 import {UserEntity} from "../entity/plat/User.entity";
 import {UserService} from "../service/user.service";
+import {BaseController} from "./base.controller";
 
 
 @Controller('/auth')
-export class LoginController {
+export class LoginController extends BaseController{
 
 
     @Inject()

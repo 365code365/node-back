@@ -1,9 +1,10 @@
 import {Inject, Controller, Get, Query} from '@midwayjs/core';
 import {Context} from '@midwayjs/koa';
 import {UserService} from '../service/user.service';
+import {BaseController} from "./base.controller";
 
 @Controller('/api')
-export class APIController {
+export class APIController extends BaseController{
   @Inject()
   ctx: Context;
 
