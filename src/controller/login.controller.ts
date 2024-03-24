@@ -1,6 +1,6 @@
 import {Controller, Inject, Post} from "@midwayjs/core";
 import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
-import {UserEntity} from "../entity/plat/User.entity";
+import {UserEntity} from "../entity/User.entity";
 import {UserService} from "../service/user.service";
 import {BaseController} from "./base.controller";
 
