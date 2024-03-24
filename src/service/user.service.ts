@@ -55,6 +55,7 @@ export class UserService {
             this.tokenEntity.save(tokenRes)
             //save in ctx
             this.ctx.setAttr(randomKey, randomKey)
+            this.ctx.setAttr(res.UserlD,res.UserlD)
         } else {
             let entity = new TokenEntity();
             randomKey = uuidv4()
@@ -65,6 +66,7 @@ export class UserService {
             entity.updateTime = new Date()
             entity.token = randomKey
             this.ctx.setAttr(randomKey, randomKey)
+            this.ctx.setAttr(res.UserlD,res.UserlD)
             await this.tokenEntity.save(entity)
         }
 
