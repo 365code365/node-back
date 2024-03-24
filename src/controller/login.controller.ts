@@ -6,7 +6,7 @@ import {BaseController} from "./base.controller";
 
 
 @Controller('/auth')
-export class LoginController extends BaseController{
+export class LoginController extends BaseController {
 
 
     @Inject()
@@ -15,6 +15,12 @@ export class LoginController extends BaseController{
     @Post('/login')
     async login(@Body() body: UserEntity) {
         let res = this.userService.login(body)
+        return res
+    }
+
+    @Post('/register')
+    async register(@Body() body: UserEntity) {
+        let res = this.userService.register(body)
         return res
     }
 

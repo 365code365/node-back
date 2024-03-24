@@ -1,7 +1,7 @@
 import {Context, Inject, Provide} from '@midwayjs/core';
 import {IUserOptions} from '../interface';
 import {UserEntity} from '../entity/User.entity';
-import {FindOneOptions, Repository} from 'typeorm';
+import {Repository} from 'typeorm';
 import {InjectEntityModel} from '@midwayjs/typeorm';
 import {CustomError} from '../exception/CustomError';
 import {ErrorCode, ErrorType} from '../constant/ErrorCode';
@@ -31,13 +31,13 @@ export class UserService {
     }
 
     async login(body: UserEntity) {
-        const option: FindOneOptions<UserEntity> = {
+
+        const res = await this.userEntity.findOne({
             where: {
                 FullName: body.FullName,
                 PasswordHash: body.PasswordHash,
             },
-        };
-        const res = await this.userEntity.findOne(option);
+        });
 
         if (res == null) {
             throw new CustomError(ErrorType.NOT_FUND_USER, ErrorCode.NOT_FUND_USER);
@@ -77,5 +77,25 @@ export class UserService {
     async getAllUser() {
         const count = await this.userEntity.count();
         return count;
+    }
+
+    async register(body: UserEntity) {
+
+        if (body.PasswordHash == null || body.PasswordHash == '') {
+            throw new CustomError(ErrorType.password_is_empty, ErrorCode.password_is_empty);
+        }
+
+        const res = await this.userEntity.findOne({
+            where: {
+                FullName: body.FullName,
+            },
+        });
+        if (res != null) {
+            throw new CustomError(ErrorType.USER_HAS_EXIST, ErrorCode.USER_HAS_EXIST);
+        } else {
+            body.UserlD = uuidv4()
+            await this.userEntity.save(body)
+            return 'register success'
+        }
     }
 }
