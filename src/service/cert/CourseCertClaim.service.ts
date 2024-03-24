@@ -14,6 +14,7 @@ export class CourseCertClaimService {
 
   async create(courseCertClaim: CourseCertClaimEntity) {
     await this.courseCertClaimRepository.save(courseCertClaim);
+
     return 'create success'
   }
 }
