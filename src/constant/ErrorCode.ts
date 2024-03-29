@@ -9,6 +9,7 @@ export enum ErrorCode {
     InternalServerError = '5004',
     USER_HAS_EXIST = '5005',
     password_is_empty = '5006',
+    token_not_exist = '5007',
 }
 
 export enum ErrorType {
@@ -19,4 +20,5 @@ export enum ErrorType {
     USER_HAS_EXIST = 'User has exist',
     Forbidden = 'Forbidden',
     InternalServerError = 'Internal server error',
+    token_not_exist = 'token_not_exist',
 }
