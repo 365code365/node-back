@@ -11,6 +11,7 @@ import {ResultMiddleware} from "./aware/ResultMiddleware";
 import {SystemErrorFilter} from "./filter/systemError.filter";
 import * as swagger from '@midwayjs/swagger';
 import * as staticFile from '@midwayjs/static-file';
+import * as session from '@midwayjs/session';
 
 @Configuration({
   imports: [
@@ -23,6 +24,7 @@ import * as staticFile from '@midwayjs/static-file';
       enabledEnvironment: ['local'],
     },
     orm,
+    session
   ],
   importConfigs: [join(__dirname, './config')],
 })

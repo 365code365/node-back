@@ -1,7 +1,8 @@
-import {Context, Controller, Get, Inject, Query} from "@midwayjs/core";
+import {Controller, Get, Inject, Query} from "@midwayjs/core";
 import {MenuService} from "../service/ menu.service";
 import {CustomError} from "../exception/CustomError";
 import {ErrorCode, ErrorType} from "../constant/ErrorCode";
+import { Context } from '@midwayjs/koa';
 
 
 @Controller('/menu')
@@ -19,7 +20,7 @@ export class MenuController{
    */
   @Get('/list')
   async getMenuList(@Query('token') token:string){
-    let tokenValue:string = this.ctx.getAttr(token);
+    let tokenValue:string = this.ctx.session.token
     if (!tokenValue){
       throw new CustomError(ErrorType.token_not_exist, ErrorCode.token_not_exist)
     }

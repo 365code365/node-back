@@ -1,4 +1,4 @@
-import {Context, Inject, Provide} from '@midwayjs/core';
+import {Inject, Provide} from '@midwayjs/core';
 import {IUserOptions} from '../interface';
 import {UserEntity} from '../entity/User.entity';
 import {Repository} from 'typeorm';
@@ -6,6 +6,7 @@ import {InjectEntityModel} from '@midwayjs/typeorm';
 import {CustomError} from '../exception/CustomError';
 import {ErrorCode, ErrorType} from '../constant/ErrorCode';
 import {TokenEntity} from '../entity/Token.entity';
+import { Context } from '@midwayjs/koa';
 
 const {v4: uuidv4} = require('uuid');
 
@@ -45,7 +46,7 @@ export class UserService {
 
         let tokenRes = await this.tokenEntity.findOne({
             where: {
-                UserId: res.UserlD
+                UserId: res.UserID
             }
         })
         let randomKey;
@@ -54,24 +55,22 @@ export class UserService {
             tokenRes.token = randomKey
             this.tokenEntity.save(tokenRes)
             //save in ctx
-            this.ctx.setAttr(randomKey, randomKey)
-            this.ctx.setAttr(res.UserlD,res.UserlD)
+            this.ctx.session.token = randomKey
         } else {
             let entity = new TokenEntity();
             randomKey = uuidv4()
             entity.ID = randomKey
-            entity.UserId = res.UserlD;
+            entity.UserId = res.UserID;
             entity.status = 1
             entity.createTime = new Date()
             entity.updateTime = new Date()
             entity.token = randomKey
-            this.ctx.setAttr(randomKey, randomKey)
-            this.ctx.setAttr(res.UserlD,res.UserlD)
+            this.ctx.session.token = randomKey
             await this.tokenEntity.save(entity)
         }
 
         return {
-            userId: res.UserlD,
+            userId: res.UserID,
             token: randomKey
         };
     }
@@ -95,7 +94,7 @@ export class UserService {
         if (res != null) {
             throw new CustomError(ErrorType.USER_HAS_EXIST, ErrorCode.USER_HAS_EXIST);
         } else {
-            body.UserlD = uuidv4()
+            body.UserID = uuidv4()
             await this.userEntity.save(body)
             return 'register success'
         }
