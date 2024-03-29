@@ -6,6 +6,12 @@ export default {
     koa: {
         port: 7001,
     },
+    cors: {
+        credentials: true,
+        origin: '*',
+        allowHeaders: '*',
+        allowMethods: '*',
+    },
     typeorm: {
         dataSource: {
             default: {
@@ -24,5 +30,16 @@ export default {
             }
         }
     },
-    middleware:['errorHandler']
+    middleware:['errorHandler'],
+  staticFile: {
+    dirs: {
+      default: {
+        prefix: '/public',
+        alias: {
+          '/': '/public/index.html',
+        },
+      },
+    },
+    // ...
+  },
 } as MidwayConfig;
