@@ -9,12 +9,13 @@ export class ReportMiddleware implements IMiddleware<Context, NextFunction> {
       const startTime = Date.now();
 
       const result = await next();
-      // 控制器之后执行的逻辑
+
       ctx.logger.info(
         `Report in "src/middleware/report.middleware.ts", rt = ${
           Date.now() - startTime
         }ms`
       );
+      console.log(' ctx.session.token', ctx.session.token)
 
       return result;
     };
