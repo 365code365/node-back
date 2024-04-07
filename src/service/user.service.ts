@@ -105,7 +105,7 @@ export class UserService {
         }
     }
 
-    async batchUser(body: UserEntity[]) {
+    async batchInsertUser(body: UserEntity[]) {
 
       await this.userEntity.save(body)
     }
