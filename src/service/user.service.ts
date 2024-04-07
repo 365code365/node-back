@@ -1,4 +1,4 @@
-import {Inject, Provide} from '@midwayjs/core';
+import {FORMAT, Inject, Provide} from '@midwayjs/core';
 import {IUserOptions} from '../interface';
 import {UserEntity} from '../entity/User.entity';
 import {Repository} from 'typeorm';
@@ -68,6 +68,7 @@ export class UserService {
             this.ctx.session.token = randomKey
             await this.tokenEntity.save(entity)
         }
+       this.ctx.session.maxAge = FORMAT.MS.ONE_DAY * 30;
 
         return {
             userId: res.UserID,
