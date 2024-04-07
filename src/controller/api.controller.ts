@@ -4,7 +4,7 @@ import {UserService} from '../service/user.service';
 import {BaseController} from "./base.controller";
 
 @Controller('/api')
-export class APIController extends BaseController{
+export class APIController extends BaseController {
   @Inject()
   ctx: Context;
 
@@ -17,10 +17,16 @@ export class APIController extends BaseController{
     return {success: true, message: 'OK', data: user};
   }
 
-  @Get('/getAllUser')
-  async getAllUser(@Query('uid') uid) {
-    const count = await this.userService.getAllUser();
+  @Get('/count')
+  async count(@Query('uid') uid) {
+    const count = await this.userService.count();
     return {success: true, message: 'OK', data: count};
+  }
+
+  @Get('/getAllUser')
+  async getAllUser(@Query() uid) {
+    const allUser = await this.userService.getAllUser();
+    return {success: true, message: 'OK', data: allUser};
   }
 
 }

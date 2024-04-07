@@ -76,9 +76,14 @@ export class UserService {
         };
     }
 
-    async getAllUser() {
+    async count() {
         const count = await this.userEntity.count();
         return count;
+    }
+
+    async getAllUser() {
+        const list = await this.userEntity.find();
+        return list;
     }
 
     async register(body: UserEntity) {
