@@ -13,4 +13,7 @@ export class MenuEntity {
 
   @Column()
   UserID: string;
+
+  @Column()
+  BtnPermitsFlag: string;
 }
