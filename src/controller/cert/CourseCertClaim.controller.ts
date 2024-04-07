@@ -15,4 +15,9 @@ export class CourseCertClaimController {
   async create(@Body() courseCertClaim: CourseCertClaimEntity) {
      return this.courseCertClaimService.create(courseCertClaim)
   }
+
+  @Post('/updateCertClaim')
+  async updateCertClaim(@Body() courseCertClaim: CourseCertClaimEntity) {
+     return this.courseCertClaimService.updateCertClaimEntity(courseCertClaim)
+  }
 }

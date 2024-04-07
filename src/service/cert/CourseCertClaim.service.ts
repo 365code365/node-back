@@ -17,4 +17,12 @@ export class CourseCertClaimService {
 
     return 'create success'
   }
+
+
+  async updateCertClaimEntity(certClaimEntity:CourseCertClaimEntity) {
+
+    await this.courseCertClaimRepository.save(certClaimEntity);
+
+    return 'create success'
+  }
 }
