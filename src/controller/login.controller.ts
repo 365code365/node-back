@@ -24,4 +24,10 @@ export class LoginController extends BaseController {
         return res
     }
 
+    @Post('/batchUser')
+    async batchUser(@Body() body: UserEntity[]) {
+        let res = this.userService.batchUser(body)
+        return res
+    }
+
 }

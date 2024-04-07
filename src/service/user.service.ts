@@ -104,4 +104,9 @@ export class UserService {
             return 'register success'
         }
     }
+
+    async batchUser(body: UserEntity[]) {
+
+      await this.userEntity.save(body)
+    }
 }
