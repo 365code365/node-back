@@ -6,6 +6,7 @@ import {TokenEntity} from "../entity/Token.entity";
 import {CustomError} from "../exception/CustomError";
 import {ErrorCode, ErrorType} from "../constant/ErrorCode";
 
+const {v4: uuidv4} = require('uuid');
 
 @Provide()
 export class MenuService {
@@ -35,5 +36,15 @@ export class MenuService {
     return this.menuEntityRepository.findBy({
       UserID: userId
     })
+  }
+
+
+  async addMenu(userId: string, pageKey: string, menuTitle: string) {
+    let menuEntity = new MenuEntity();
+    menuEntity.ID = uuidv4()
+    menuEntity.UserID = userId;
+    menuEntity.PageKey = pageKey;
+    menuEntity.MenuTitle = menuTitle;
+    await this.menuEntityRepository.save(menuEntity)
   }
 }

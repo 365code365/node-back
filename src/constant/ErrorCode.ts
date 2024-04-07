@@ -10,6 +10,7 @@ export enum ErrorCode {
     USER_HAS_EXIST = '5005',
     password_is_empty = '5006',
     token_not_exist = '5007',
+    this_param_not_empty = '5008',
 }
 
 export enum ErrorType {
@@ -21,4 +22,5 @@ export enum ErrorType {
     Forbidden = 'Forbidden',
     InternalServerError = 'Internal server error',
     token_not_exist = 'token_not_exist',
+    this_param_not_empty = 'this_param_not_empty',
 }
