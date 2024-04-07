@@ -6,7 +6,7 @@ import {InjectEntityModel} from '@midwayjs/typeorm';
 import {CustomError} from '../exception/CustomError';
 import {ErrorCode, ErrorType} from '../constant/ErrorCode';
 import {TokenEntity} from '../entity/Token.entity';
-import { Context } from '@midwayjs/koa';
+import {Context} from '@midwayjs/koa';
 
 const {v4: uuidv4} = require('uuid');
 
@@ -82,8 +82,7 @@ export class UserService {
     }
 
     async getAllUser() {
-        const list = await this.userEntity.find();
-        return list;
+      return await this.userEntity.find();
     }
 
     async register(body: UserEntity) {
