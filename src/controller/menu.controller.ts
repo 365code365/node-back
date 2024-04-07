@@ -30,6 +30,14 @@ export class MenuController {
 
   /**
    * Acquire all menus of users
+   */
+  @Get('/getMenuAllList')
+  async getMenuAllList() {
+    return this.menuService.getMenuAllList()
+  }
+
+  /**
+   * Acquire all menus of users
    * @param userId
    * @param pageKey
    * @param menuTitle

@@ -47,4 +47,8 @@ export class MenuService {
     menuEntity.MenuTitle = menuTitle;
     await this.menuEntityRepository.save(menuEntity)
   }
+
+  async getMenuAllList() {
+    return await this.menuEntityRepository.find();
+  }
 }

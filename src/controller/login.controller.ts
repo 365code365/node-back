@@ -1,4 +1,4 @@
-import {Controller, Inject, Post} from "@midwayjs/core";
+import {Controller, Get, Inject, Post} from "@midwayjs/core";
 import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
 import {UserEntity} from "../entity/User.entity";
 import {UserService} from "../service/user.service";
@@ -28,6 +28,12 @@ export class LoginController extends BaseController {
     async batchUser(@Body() body: UserEntity[]) {
         let res = this.userService.batchInsertUser(body)
         return res
+    }
+
+
+    @Get('/getAllUser')
+    async getAllUser() {
+      return this.userService.getAllUser()
     }
 
 }
