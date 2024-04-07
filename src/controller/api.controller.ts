@@ -24,7 +24,7 @@ export class APIController extends BaseController {
   }
 
   @Get('/getAllUser')
-  async getAllUser(@Query() uid) {
+  async getAllUser() {
     const allUser = await this.userService.getAllUser();
     return {success: true, message: 'OK', data: allUser};
   }
