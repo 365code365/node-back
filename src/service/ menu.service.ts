@@ -39,13 +39,24 @@ export class MenuService {
   }
 
 
-  async addMenu(userId: string, pageKey: string, menuTitle: string) {
+  async addMenu(userId: string, pageKey: string, menuTitle: string, permsFlag: string) {
     let menuEntity = new MenuEntity();
     menuEntity.ID = uuidv4()
     menuEntity.UserID = userId;
     menuEntity.PageKey = pageKey;
     menuEntity.MenuTitle = menuTitle;
-    await this.menuEntityRepository.save(menuEntity)
+    menuEntity.BtnPermitsFlag = permsFlag
+
+    let res = await this.menuEntityRepository.find({
+      where: {
+        PageKey: pageKey,
+        UserID: userId
+      }
+    })
+
+    if (res.length == 0) {
+      await this.menuEntityRepository.save(menuEntity)
+    }
   }
 
   async getMenuAllList() {

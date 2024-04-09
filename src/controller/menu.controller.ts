@@ -1,8 +1,10 @@
-import {Controller, Get, Inject, Query} from "@midwayjs/core";
+import {Controller, Get, Inject, Post, Query} from "@midwayjs/core";
 import {MenuService} from "../service/ menu.service";
 import {CustomError} from "../exception/CustomError";
 import {ErrorCode, ErrorType} from "../constant/ErrorCode";
 import {Context} from '@midwayjs/koa';
+import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
+import {MenuEntity} from "../entity/Menu.entity";
 
 
 @Controller('/menu')
@@ -43,7 +45,10 @@ export class MenuController {
    * @param menuTitle
    */
   @Get('/addMenu')
-  async addMenu(@Query('userId') userId: string, @Query('pageKey') pageKey: string, @Query('menuTitle') menuTitle: string) {
+  async addMenu(@Query('userId') userId: string,
+                @Query('pageKey') pageKey: string,
+                @Query('menuTitle') menuTitle: string,
+                @Query('permsFlag') permsFlag: string) {
 
     if (!userId) {
       throw new CustomError(ErrorType.this_param_not_empty, ErrorCode.this_param_not_empty)
@@ -55,6 +60,18 @@ export class MenuController {
       throw new CustomError(ErrorType.this_param_not_empty, ErrorCode.this_param_not_empty)
     }
 
-    return this.menuService.addMenu(userId, pageKey, menuTitle)
+    return this.menuService.addMenu(userId, pageKey, menuTitle, permsFlag)
+  }
+
+  /**
+   * Acquire all menus of users
+   * @param menuMenuEntity
+   */
+  @Post('/batchAddMenu')
+  async batchAddMenu(@Body() menuMenuEntity: MenuEntity[]) {
+    menuMenuEntity.forEach(item => {
+      this.menuService.addMenu(item.UserID, item.PageKey, item.PageKey, item.BtnPermitsFlag)
+    })
+    return "success"
   }
 }
