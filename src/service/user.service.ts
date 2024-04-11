@@ -107,7 +107,19 @@ export class UserService {
 
   async batchInsertUser(body: UserEntity[]) {
 
-    await this.userEntity.save(body)
+    let arr = []
+    for (let i = 0; i < body.length; i++) {
+      body[i].UserID = uuidv4();
+      const res = await this.userEntity.findOne({
+        where: {
+          FullName: body[i].FullName,
+        },
+      });
+      if (!res) {
+        arr.push(body[i])
+      }
+    }
+    await this.userEntity.save(arr)
   }
 
   async addRole(user: UserEntity) {
@@ -121,4 +133,9 @@ export class UserService {
     }
     await this.userEntity.save(user)
   }
+
+  async list() {
+    return this.userEntity.find()
+  }
+
 }
