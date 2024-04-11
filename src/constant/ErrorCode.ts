@@ -11,6 +11,7 @@ export enum ErrorCode {
     password_is_empty = '5006',
     token_not_exist = '5007',
     this_param_not_empty = '5008',
+    has_exist = '5009',
 }
 
 export enum ErrorType {
@@ -23,4 +24,5 @@ export enum ErrorType {
     InternalServerError = 'Internal server error',
     token_not_exist = 'token_not_exist',
     this_param_not_empty = 'this_param_not_empty',
+    has_exist = 'has_exist',
 }
