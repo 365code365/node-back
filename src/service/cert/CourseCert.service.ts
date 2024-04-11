@@ -56,4 +56,17 @@ export class CourseCertService {
   async listAll() {
     return await this.courseCertEntity.find()
   }
+
+  async del(cert: CourseCertEntity) {
+    const entityToRemove = await this.courseCertEntity.findOne({
+      where: {
+        ID: cert.ID
+      }
+    });
+    if (entityToRemove) {
+      await this.courseCertEntity.remove(entityToRemove)
+    }
+
+    return 'del success'
+  }
 }
