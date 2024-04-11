@@ -18,4 +18,8 @@ export class DocumentService {
     await this.documentEntityRepository.save(doc);
     return 'create success'
   }
+
+  async list() {
+    return this.documentEntityRepository.find();
+  }
 }

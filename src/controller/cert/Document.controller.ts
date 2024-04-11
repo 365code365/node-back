@@ -1,4 +1,4 @@
-import {Controller, Inject, Post} from "@midwayjs/core";
+import {Controller, Get, Inject, Post} from "@midwayjs/core";
 import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
 import {DocumentEntity} from "../../entity/cert/Document.entity";
 import {DocumentService} from "../../service/cert/Document.service";
@@ -13,6 +13,11 @@ export class DocumentController {
   @Post('/create')
   async create(@Body() doc: DocumentEntity) {
     return  this.documentService.create(doc)
+  }
+
+  @Get('/list')
+  async list() {
+    return  this.documentService.list()
   }
 
 }
