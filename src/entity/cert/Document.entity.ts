@@ -16,7 +16,7 @@ export class DocumentEntity {
   @Column()
   DocumentType: string
   @Column()
-  Date: string
+  Date: Date
   @Column()
   Filenare: string
   @Column()
