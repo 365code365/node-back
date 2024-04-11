@@ -52,4 +52,8 @@ export class CourseCertService {
       UserlD: cert.UserlD
     })
   }
+
+  async listAll() {
+    return await this.courseCertEntity.find()
+  }
 }
