@@ -64,7 +64,7 @@ export class CourseCertService {
       }
     });
     if (entityToRemove) {
-      await this.courseCertEntity.remove(entityToRemove)
+      return await this.courseCertEntity.remove(entityToRemove)
     }
 
     return 'del success'
