@@ -29,6 +29,10 @@ export class CourseCertEntity {
   SubmissionEndDate: string
   @Column()
   SubmissionStartDate: string
+  @Column()
+  CourseDesc: string
+  @Column()
+  CourseImage: string
 
 
 }
