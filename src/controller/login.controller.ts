@@ -36,4 +36,9 @@ export class LoginController extends BaseController {
       return this.userService.getAllUser()
     }
 
+    @Post('/addRole')
+    async addRole(@Body() user:UserEntity) {
+      return this.userService.addRole(user)
+    }
+
 }
