@@ -4,7 +4,7 @@ import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
 import {UserEntity} from "../../entity/User.entity";
 
 @Controller('/user')
-  export class UserController{
+export class UserController {
 
 
   @Inject()
@@ -20,6 +20,12 @@ import {UserEntity} from "../../entity/User.entity";
   @Get('/list')
   async list() {
     let res = this.userService.list()
+    return res
+  }
+
+  @Post('/del')
+  async del(@Body() body: UserEntity) {
+    let res = this.userService.del(body)
     return res
   }
 

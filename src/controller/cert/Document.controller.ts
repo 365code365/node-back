@@ -19,5 +19,9 @@ export class DocumentController {
   async list() {
     return  this.documentService.list()
   }
+  @Post('/del')
+  async del(@Body() doc: DocumentEntity) {
+    return  this.documentService.del(doc)
+  }
 
 }

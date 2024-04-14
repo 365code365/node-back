@@ -139,4 +139,15 @@ export class UserService {
     return this.userEntity.find()
   }
 
+  async del(body: UserEntity) {
+    const res = await this.userEntity.findOne({
+      where: {
+        UserID: body.UserID,
+      },
+    });
+    if (!res) {
+      throw new CustomError(ErrorType.has_not_exist, ErrorCode.has_not_exist);
+    }
+    await this.userEntity.remove(res)
+  }
 }
