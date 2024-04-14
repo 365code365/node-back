@@ -8,9 +8,9 @@ export class CourseCertClaimEntity {
   @PrimaryColumn()
   ID: string
   @Column()
-  UserlD: string
+  UserID: string
   @Column()
-  CourseAndCertificationlD: string
+  CourseAndCertificationID: string
   @Column()
   TotalClaimAmount: string
   @Column()
@@ -18,7 +18,7 @@ export class CourseCertClaimEntity {
   @Column()
   Status: string
   @Column()
-  ExaminationDate: string
+  ExaminationDate: Date
   @Column()
   Remark: string
 

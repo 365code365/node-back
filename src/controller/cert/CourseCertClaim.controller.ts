@@ -1,4 +1,4 @@
-import {Controller, Inject, Post} from "@midwayjs/core";
+import {Controller, Get, Inject, Post} from "@midwayjs/core";
 import {CourseCertClaimEntity} from "../../entity/cert/CourseCertClaim.entity";
 import {Body} from "@midwayjs/core/dist/decorator/web/paramMapping";
 import {CourseCertClaimService} from "../../service/cert/CourseCertClaim.service";
@@ -19,5 +19,10 @@ export class CourseCertClaimController {
   @Post('/updateCertClaim')
   async updateCertClaim(@Body() courseCertClaim: CourseCertClaimEntity) {
      return this.courseCertClaimService.updateCertClaimEntity(courseCertClaim)
+  }
+
+  @Get('/getDetail')
+  async getDetail(@Body() courseCertClaim: CourseCertClaimEntity) {
+     return this.courseCertClaimService.getDetail(courseCertClaim)
   }
 }

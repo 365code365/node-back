@@ -73,7 +73,8 @@ export class UserService {
     return {
       userId: res.UserID,
       Role: res.Role,
-      token: randomKey
+      token: randomKey,
+      UserID:res.UserID
     };
   }
 
