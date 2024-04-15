@@ -33,7 +33,7 @@ export class CourseCertClaimService {
     courseCertClaimEntity.Status = certClaimEntity.Status
     await this.courseCertClaimRepository.save(courseCertClaimEntity);
 
-    return 'create success'
+    return 'update success'
   }
 
   async getDetail(certClaimEntity: CourseCertClaimEntity) {
