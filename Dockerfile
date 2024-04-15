@@ -15,6 +15,8 @@ RUN git clone https://github.com/365code365/node-back.git .
 # 安装依赖项
 RUN npm install
 
+RUN npm install midway-bin --save-dev
+
 RUN npm run build
 
 # 安装 PM2
