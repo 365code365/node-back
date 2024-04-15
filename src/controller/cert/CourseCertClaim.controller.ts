@@ -30,4 +30,9 @@ export class CourseCertClaimController {
   async list() {
      return this.courseCertClaimService.list()
   }
+
+  @Get('/getListById')
+  async getListById(@Body() courseCertClaim: CourseCertClaimEntity) {
+     return this.courseCertClaimService.getListById(courseCertClaim)
+  }
 }
