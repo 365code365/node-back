@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 192.168.31.153
  Source Server Type    : MySQL
  Source Server Version : 80028
- Source Host           : localhost:3306
+ Source Host           : 192.168.31.153:3306
  Source Schema         : whole_plat
 
  Target Server Type    : MySQL
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 14/04/2024 18:49:21
+ Date: 16/04/2024 20:20:44
 */
 
 SET NAMES utf8mb4;
@@ -66,7 +66,7 @@ CREATE TABLE `courseandcertificationclaim`  (
 -- ----------------------------
 -- Records of courseandcertificationclaim
 -- ----------------------------
-INSERT INTO `courseandcertificationclaim` VALUES ('49e0b608-775d-4041-b26c-6e1332b91327', 'f15976c1c39d1', '71737528-472b-46ae-aefb-1788e112731d', '121212', '1212', NULL, '2024-04-30 00:00:00', '212112');
+INSERT INTO `courseandcertificationclaim` VALUES ('49e0b608-775d-4041-b26c-6e1332b91327', '11', '71737528-472b-46ae-aefb-1788e112731d', '121212', '1212', 'Reject', '2024-04-30 00:00:00', 'finish');
 
 -- ----------------------------
 -- Table structure for document
@@ -131,7 +131,7 @@ CREATE TABLE `token`  (
 -- ----------------------------
 -- Records of token
 -- ----------------------------
-INSERT INTO `token` VALUES ('2eb530b2-0e13-4807-857b-834490ee7432', '5b78549a-1451-44c5-b6c6-c90d55b68543', '2024-03-24 14:35:43', '2024-03-24 14:35:43', '1', '11');
+INSERT INTO `token` VALUES ('2eb530b2-0e13-4807-857b-834490ee7432', '6cafa883-cab2-4c07-8941-acc2e220c4cf', '2024-03-24 14:35:43', '2024-03-24 14:35:43', '1', '11');
 INSERT INTO `token` VALUES ('425948aa-21fe-446e-a7fe-003830426d86', 'f133c276-bd1c-400c-8272-ee8b25d996db', '2024-03-27 23:40:13', '2024-03-27 23:40:13', '1', '786083aa-8dab-4c6a-ac98-c6f4eea3d876');
 INSERT INTO `token` VALUES ('5c61eb7a-3974-4b7e-9def-c7760300fdd1', '038b4ed3-f0f3-4fcd-b79d-9dab57788ac6', '2024-04-11 20:15:24', '2024-04-11 20:15:24', '1', 'ab0a2f74-2553-45d4-8735-c26753313a2f');
 INSERT INTO `token` VALUES ('ae8489b4-f650-4e3e-92e0-92019e5706e2', '6bb92f8b-fbd3-41ad-afd5-c6f7fa2656c7', '2024-04-14 18:04:20', '2024-04-14 18:04:20', '1', 'f15976c1c39d1');
@@ -159,11 +159,12 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('11', 'admin@admin.com', 'admin', '123456', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES ('11', 'admin@admin.com', 'student', '123456', NULL, NULL, NULL, NULL, NULL, '2024-04-16 17:25:07');
 INSERT INTO `user` VALUES ('16881869-39e4-4854-a49e-f15976c1c39d', '1one2', 'admin', '123456', NULL, NULL, NULL, NULL, 2, '2024-04-11 20:19:43');
 INSERT INTO `user` VALUES ('2f9d484d-6ac9-4cee-9369-859414709e27', '1one3', 'admin', '123456', NULL, NULL, NULL, NULL, 2, '2024-04-11 20:19:43');
 INSERT INTO `user` VALUES ('4d313fc1-42e5-4523-bab9-2b9bebfa5298', '122112', 'admin', '12345612112', NULL, NULL, NULL, NULL, 2, '2024-04-11 20:13:29');
 INSERT INTO `user` VALUES ('70dd5701-d6b5-4e24-bbf1-91ec7ef8ed7d', 'qwwqwqwq', 'admin', '12345612112', NULL, NULL, NULL, NULL, 2, '2024-04-11 20:13:13');
+INSERT INTO `user` VALUES ('e0b7059c-25aa-4693-9807-ff68fe07650f', '2112', 'admin', '2121', NULL, NULL, NULL, NULL, 2, '2024-04-16 00:00:04');
 INSERT INTO `user` VALUES ('f15976c1c39d1', '122121@qq.com', 'admin', '123456', NULL, NULL, NULL, NULL, 2, '2024-04-14 18:47:12');
 
 SET FOREIGN_KEY_CHECKS = 1;
