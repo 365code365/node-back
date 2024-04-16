@@ -11,6 +11,8 @@ export class UserEntity {
   @Column()
   PasswordHash: string;
   @Column()
+  Email: string;
+  @Column()
   LastPasswordChangeDate: Date;
   @Column()
   LastLoginDate: Date;

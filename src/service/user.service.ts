@@ -35,7 +35,7 @@ export class UserService {
 
     const res = await this.userEntity.findOne({
       where: {
-        FullName: body.FullName,
+        Email: body.Email,
         PasswordHash: body.PasswordHash,
       },
     });
@@ -95,7 +95,7 @@ export class UserService {
 
     const res = await this.userEntity.findOne({
       where: {
-        FullName: body.FullName,
+        Email: body.Email,
       },
     });
     if (res != null) {
@@ -114,7 +114,7 @@ export class UserService {
       body[i].UserID = uuidv4();
       const res = await this.userEntity.findOne({
         where: {
-          FullName: body[i].FullName,
+          Email: body[i].Email,
         },
       });
       if (!res) {
