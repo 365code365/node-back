@@ -21,9 +21,9 @@ export class CourseCertClaimController {
      return this.courseCertClaimService.updateCertClaimEntity(courseCertClaim)
   }
 
-  @Get('/getDetail')
+  @Post('/getDetail')
   async getDetail(@Body() courseCertClaim: CourseCertClaimEntity) {
-     return this.courseCertClaimService.getDetail(courseCertClaim)
+    return await this.courseCertClaimService.getDetail(courseCertClaim)
   }
 
   @Get('/list')

@@ -37,12 +37,13 @@ export class CourseCertClaimService {
   }
 
   async getDetail(certClaimEntity: CourseCertClaimEntity) {
-    return await this.courseCertClaimRepository.findOne({
+    let courseCertClaimEntity = await this.courseCertClaimRepository.findOne({
       where: {
         UserID: certClaimEntity.UserID,
         CourseAndCertificationID: certClaimEntity.CourseAndCertificationID
       }
     });
+    return courseCertClaimEntity?courseCertClaimEntity:new CourseCertClaimEntity()
   }
 
   async list() {
