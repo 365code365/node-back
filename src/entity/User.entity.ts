@@ -18,4 +18,8 @@ export class UserEntity {
   LastLoginDate: Date;
   @Column()
   Status: string;
+  @Column()
+  Grade: string;
+  @Column()
+  Gender: string;
 }

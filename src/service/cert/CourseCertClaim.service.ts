@@ -3,6 +3,7 @@ import {CourseCertClaimEntity} from "../../entity/cert/CourseCertClaim.entity";
 import {Repository} from "typeorm";
 import {Provide} from "@midwayjs/core";
 import {UserEntity} from "../../entity/User.entity";
+import {DocumentEntity} from "../../entity/cert/Document.entity";
 
 const {v4: uuidv4} = require('uuid');
 
@@ -18,6 +19,10 @@ export class CourseCertClaimService {
   userEntityRepository: Repository<UserEntity>;
 
 
+
+  @InjectEntityModel(DocumentEntity)
+  documentEntityRepository: Repository<DocumentEntity>
+
   async create(courseCertClaim: CourseCertClaimEntity) {
     courseCertClaim.ID = uuidv4()
     courseCertClaim.Status = 'Pending'
@@ -31,6 +36,7 @@ export class CourseCertClaimService {
     let courseCertClaimEntity = await this.getDetail(certClaimEntity);
     courseCertClaimEntity.Remark = certClaimEntity.Remark
     courseCertClaimEntity.Status = certClaimEntity.Status
+    //todo status = 'finsh' send email
     await this.courseCertClaimRepository.save(courseCertClaimEntity);
 
     return 'update success'
@@ -43,7 +49,12 @@ export class CourseCertClaimService {
         CourseAndCertificationID: certClaimEntity.CourseAndCertificationID
       }
     });
-    return courseCertClaimEntity?courseCertClaimEntity:new CourseCertClaimEntity()
+    let list = []
+   if (courseCertClaimEntity){
+        list = await this.documentEntityRepository.find({where:{ClaimlD:courseCertClaimEntity.CourseAndCertificationID}});
+   }
+
+    return {...courseCertClaimEntity ? courseCertClaimEntity : new CourseCertClaimEntity(), documentList: list}
   }
 
   async list() {

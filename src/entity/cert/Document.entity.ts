@@ -27,6 +27,8 @@ export class DocumentEntity {
   RejectionReason: string
   @Column()
   Status: string
+  @Column()
+  FileContent: string
 
 
 }

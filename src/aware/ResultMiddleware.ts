@@ -4,28 +4,37 @@ import {ErrorCode} from "../constant/ErrorCode";
 
 @Middleware()
 export class ResultMiddleware implements IMiddleware<Context, NextFunction> {
-    resolve() {
-        return async (ctx: Context, next: NextFunction) => {
+  resolve() {
+    return async (ctx: Context, next: NextFunction) => {
 
-            const startTime = Date.now();
+      const startTime = Date.now();
 
-            const result = await next();
+      const staticPrefix:string = '/public/';
 
-            ctx.logger.info(
-                `Report in "src/middleware/report.middleware.ts", rt = ${
-                    Date.now() - startTime
-                }ms`
-            );
 
-            return {
-                code: ErrorCode.SUCCESS,
-                msg: ctx.message,
-                data: result
-            };
-        };
-    }
+      if (ctx.request.path.startsWith(staticPrefix)) {
 
-    static getName(): string {
-        return 'report';
-    }
+        await next();
+        return;
+      }
+
+      const result = await next();
+
+      ctx.logger.info(
+        `Report in "src/middleware/report.middleware.ts", rt = ${
+          Date.now() - startTime
+        }ms`
+      );
+
+      return {
+        code: ErrorCode.SUCCESS,
+        msg: ctx.message,
+        data: result
+      };
+    };
+  }
+
+  static getName(): string {
+    return 'report';
+  }
 }

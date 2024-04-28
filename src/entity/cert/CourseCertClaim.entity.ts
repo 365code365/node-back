@@ -18,7 +18,7 @@ export class CourseCertClaimEntity {
   @Column()
   Status: string
   @Column()
-  ExaminationDate: Date
+  ExaminationDate: string
   @Column()
   Remark: string
 

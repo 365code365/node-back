@@ -30,16 +30,5 @@ export default {
             }
         }
     },
-    middleware:['errorHandler'],
-  staticFile: {
-    dirs: {
-      default: {
-        prefix: '/public',
-        alias: {
-          '/': '/public/index.html',
-        },
-      },
-    },
-    // ...
-  },
+    middleware:['errorHandler']
 } as MidwayConfig;

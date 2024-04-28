@@ -23,8 +23,8 @@ export class CourseCertEntity {
   CreatedAt: string
   @Column()
   UpdatedAt: string
-  @Column()
-  AdminNum: string
+  //@Column()
+  //AdminNum: string
   @Column()
   SubmissionEndDate: string
   @Column()
