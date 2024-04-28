@@ -19,7 +19,6 @@ export class CourseCertClaimService {
   userEntityRepository: Repository<UserEntity>;
 
 
-
   @InjectEntityModel(DocumentEntity)
   documentEntityRepository: Repository<DocumentEntity>
 
@@ -50,11 +49,17 @@ export class CourseCertClaimService {
       }
     });
     let list = []
-   if (courseCertClaimEntity){
-        list = await this.documentEntityRepository.find({where:{ClaimlD:courseCertClaimEntity.CourseAndCertificationID}});
-   }
+    if (courseCertClaimEntity) {
+      list = await this.documentEntityRepository.find({where: {ClaimlD: courseCertClaimEntity.CourseAndCertificationID}});
+    }
 
-    return {...courseCertClaimEntity ? courseCertClaimEntity : new CourseCertClaimEntity(), documentList: list}
+    let userEntity = await this.userEntityRepository.findOne({where: {UserID: certClaimEntity.UserID}});
+
+
+    return {
+      ...userEntity, ...courseCertClaimEntity ? courseCertClaimEntity : new CourseCertClaimEntity(),
+      documentList: list
+    }
   }
 
   async list() {
@@ -78,10 +83,10 @@ export class CourseCertClaimService {
         }
       });
 
-       let option = {
-          label:userEntity.FullName,
-          value:userEntity.UserID,
-       }
+      let option = {
+        label: userEntity.FullName,
+        value: userEntity.UserID,
+      }
       arr.push(option)
     }
 
