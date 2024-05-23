@@ -7,6 +7,8 @@ import {DocumentEntity} from "../../entity/cert/Document.entity";
 import {CourseCertEntity} from "../../entity/cert/CourseCert.entity";
 import {CustomError} from "../../exception/CustomError";
 import {ErrorCode, ErrorType} from "../../constant/ErrorCode";
+import EmailService from "../../util/Mailer";
+import FileService from "../../util/FileService";
 
 const {v4: uuidv4} = require('uuid');
 
@@ -64,11 +66,47 @@ export class CourseCertClaimService {
           }
           applyRuleJson[i].status = "finish"
 
-          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRule.length - 1) {
+          if (applyRuleJson[i].aproveRoleName == 'IMDA') {
+            let mailer: EmailService = new EmailService()
+
+
+            let selectQueryBuilder = this.documentEntityRepository.createQueryBuilder();
+            let documentEntities = await selectQueryBuilder.where("ClaimID=:ClaimID and UserID=:UserID",
+              {
+                ClaimID: certClaimEntity.CourseAndCertificationID,
+                UserID: certClaimEntity.UserID
+              }).getMany();
+            console.log('many', documentEntities)
+
+            let fileService = new FileService();
+
+            let arr = []
+            for (let j = 0; j < documentEntities.length; j++) {
+              let fileName = "attachments_" + j + ".jpg";
+
+              let filePath = fileService.saveBase64ToFile("data:image/png;base64,"+documentEntities[j].FileContent, fileName);
+              arr.push({
+                filename: fileName,
+                path: filePath
+              })
+            }
+
+
+            const mailOptions = {
+              from: '614660823@qq.com',
+              to: 'shisheng@live.com',
+              subject: 'this attachments',
+              text: 'this attachments',
+              attachments: arr,
+            };
+            mailer.sendMail(mailOptions)
+          }
+
+          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRuleJson.length - 2) {
             applyRuleJson[i + 1].status = "finish"
           }
         } else {
-          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRule.length - 1) {
+          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRuleJson.length - 2) {
             applyRuleJson[i + 1].status = "waiting"
           }
           applyRuleJson[i].status = "error"
@@ -78,8 +116,8 @@ export class CourseCertClaimService {
 
 
     }
-    courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
-    await this.courseCertClaimRepository.save(courseCertClaimEntity);
+    // courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
+    // await this.courseCertClaimRepository.save(courseCertClaimEntity);
 
     return 'update success'
   }
@@ -94,7 +132,7 @@ export class CourseCertClaimService {
     let courseCertClaimEntity = await queryBuilder.getOne();
     let list = []
     if (courseCertClaimEntity) {
-      list = await this.documentEntityRepository.find({where: {ClaimlD: courseCertClaimEntity.CourseAndCertificationID}});
+      list = await this.documentEntityRepository.find({where: {ClaimID: courseCertClaimEntity.CourseAndCertificationID}});
     }
 
     let userEntity = await this.userEntityRepository.findOne({where: {UserID: certClaimEntity.UserID}});

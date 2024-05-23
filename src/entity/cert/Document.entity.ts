@@ -10,9 +10,9 @@ export class DocumentEntity {
   @Column()
   ClaimType: string
   @Column()
-  ClaimlD: string
+  ClaimID: string
   @Column()
-  UserlD: string
+  UserID: string
   @Column()
   DocumentType: string
   @Column()
