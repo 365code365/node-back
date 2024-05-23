@@ -46,43 +46,49 @@ export class CourseCertService {
     cert.applyRule = "[\n" +
       "    {\n" +
       "        \"aproveRole\": \"student\",\n" +
+      "        \"aproveRoleName\": \"student\",\n" +
       "        \"order\": 1,\n" +
       "        \"status\": \"finish\",\n" +
       "        \"desc\": \"student submit\"\n" +
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"Teacher\",\n" +
+      "        \"aproveRoleName\": \"Teacher\",\n" +
       "        \"order\": 2,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Submitted to teacher\"\n" +
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"SIT\",\n" +
+      "        \"aproveRoleName\": \"SIT\",\n" +
       "        \"order\": 3,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Submitted to SlT Admin\"\n" +
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"NYP\",\n" +
+      "        \"aproveRoleName\": \"NYP\",\n" +
       "        \"order\": 4,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Submitted to NYP Admin\"\n" +
       "    },\n" +
       "    {\n" +
-      "        \"aproveRole\": \"IMDA\",\n" +
+      "        \"aproveRole\": \"NYP\",\n" +
+      "        \"aproveRoleName\": \"IMDA\",\n" +
       "        \"order\": 5,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Submitted to IMDA Company\"\n" +
       "    },\n" +
       "    {\n" +
-      "        \"aproveRole\": \"Account\",\n" +
-      "        \"order\": 5,\n" +
+      "        \"aproveRole\": \"NYP\",\n" +
+      "        \"aproveRoleName\": \"IMDA\",\n" +
+      "        \"order\": 6,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Waiting to CollectClaim\"\n" +
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"end\",\n" +
-      "        \"order\": 6,\n" +
+      "        \"order\": 7,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"apply end\"\n" +
       "    }\n" +
