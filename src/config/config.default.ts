@@ -17,10 +17,10 @@ export default {
             default: {
                 type: 'mysql',
                 host: '127.0.0.1',
-                port: 3306,
+                port: 3307,
                 username: 'root',
                 password: 'root',
-                database: 'whole_plat',
+                database: 'FYP',
                 synchronize: false,
                 logging: false,
                 entities: [
