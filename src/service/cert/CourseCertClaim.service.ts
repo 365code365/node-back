@@ -65,6 +65,16 @@ export class CourseCertClaimService {
         }
       }
 
+      if (certClaimEntity.role.toLowerCase() == applyRuleJson[i].aproveRole.toLowerCase()) {
+        if ("Pass" == certClaimEntity.Status && certClaimEntity.role.toLowerCase() == 'account') {
+          applyRuleJson[i].status = "finish"
+          applyRuleJson[i + 1].status = "finish"
+        } else {
+          applyRuleJson[i + 1].status = "waiting"
+          applyRuleJson[i].status = "error"
+        }
+      }
+
     }
     courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
     await this.courseCertClaimRepository.save(courseCertClaimEntity);

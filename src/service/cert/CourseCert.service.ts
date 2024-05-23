@@ -82,7 +82,7 @@ export class CourseCertService {
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"end\",\n" +
-      "        \"order\": 5,\n" +
+      "        \"order\": 6,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"apply end\"\n" +
       "    }\n" +
