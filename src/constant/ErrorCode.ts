@@ -13,6 +13,7 @@ export enum ErrorCode {
   this_param_not_empty = '5008',
   has_exist = '5009',
   has_not_exist = '5010',
+  app_error = '5011',
 }
 
 export enum ErrorType {
@@ -27,4 +28,5 @@ export enum ErrorType {
   this_param_not_empty = 'this_param_not_empty',
   has_exist = 'has_exist',
   has_not_exist = 'has_not_exist',
+  app_error = 'approve result reject or waiting',
 }

@@ -22,5 +22,12 @@ export class CourseCertClaimEntity {
   @Column()
   Remark: string
 
+  @Column()
+  applyRule: string
+
+  /**
+   * role
+   */
+  role: string
 
 }

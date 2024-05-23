@@ -33,6 +33,10 @@ export class CourseCertEntity {
   CourseDesc: string
   @Column()
   CourseImage: string
+  @Column()
+  grade: string
 
+  @Column()
+  applyRule: string
 
 }

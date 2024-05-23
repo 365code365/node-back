@@ -42,6 +42,51 @@ export class CourseCertService {
       throw new CustomError(ErrorType.has_exist, ErrorCode.has_exist);
     }
 
+
+    cert.applyRule = "[\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"student\",\n" +
+      "        \"order\": 1,\n" +
+      "        \"status\": \"finish\",\n" +
+      "        \"desc\": \"student submit\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"Teacher\",\n" +
+      "        \"order\": 2,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"Submitted to teacher\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"SIT\",\n" +
+      "        \"order\": 3,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"Submitted to SlT Admin\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"NYP\",\n" +
+      "        \"order\": 4,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"Submitted to NYP Admin\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"IMDA\",\n" +
+      "        \"order\": 5,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"Submitted to IMDA Company\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"Account\",\n" +
+      "        \"order\": 5,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"Waiting to CollectClaim\"\n" +
+      "    },\n" +
+      "    {\n" +
+      "        \"aproveRole\": \"end\",\n" +
+      "        \"order\": 5,\n" +
+      "        \"status\": \"waiting\",\n" +
+      "        \"desc\": \"apply end\"\n" +
+      "    }\n" +
+      "]"
     let res = await this.courseCertEntity.save(cert)
     return res;
   }
@@ -68,5 +113,10 @@ export class CourseCertService {
     }
 
     return 'del success'
+  }
+
+  async getDetail(cert: CourseCertEntity) {
+    let queryBuilder = this.courseCertEntity.createQueryBuilder();
+    return  await queryBuilder.where("ID=:id", {id: cert.ID}).getOne();
   }
 }

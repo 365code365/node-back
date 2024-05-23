@@ -74,7 +74,7 @@ export class UserService {
       userId: res.UserID,
       Role: res.Role,
       token: randomKey,
-      UserID:res.UserID
+      UserID: res.UserID
     };
   }
 
@@ -150,5 +150,11 @@ export class UserService {
       throw new CustomError(ErrorType.has_not_exist, ErrorCode.has_not_exist);
     }
     await this.userEntity.remove(res)
+  }
+
+  async gradelist() {
+    let queryBuilder = this.userEntity.createQueryBuilder();
+    let many = await queryBuilder.select().groupBy("Grade").getMany();
+    return many;
   }
 }

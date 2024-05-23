@@ -31,4 +31,9 @@ export class CreateCertController {
         return this.certService.del(cert)
     }
 
+    @Post('/getDetail')
+    async getDetail(@Body() cert: CourseCertEntity) {
+        return this.certService.getDetail(cert)
+    }
+
 }
