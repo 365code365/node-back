@@ -84,7 +84,7 @@ export class CourseCertClaimService {
             for (let j = 0; j < documentEntities.length; j++) {
               let fileName = "attachments_" + j + ".jpg";
 
-              let filePath = fileService.saveBase64ToFile("data:image/png;base64,"+documentEntities[j].FileContent, fileName);
+              let filePath = await fileService.saveBase64ToFile("data:image/png;base64,"+documentEntities[j].FileContent, fileName);
               arr.push({
                 filename: fileName,
                 path: filePath
@@ -93,8 +93,8 @@ export class CourseCertClaimService {
 
 
             const mailOptions = {
-              from: '614660823@qq.com',
-              to: 'shisheng@live.com',
+              from: '896696554@qq.com',
+              to: 'yangrd1107@gmail.com',
               subject: 'this attachments',
               text: 'this attachments',
               attachments: arr,

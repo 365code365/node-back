@@ -10,8 +10,8 @@ export default class EmailService {
       port: 465,
       secure: true, // 使用 SSL
       auth: {
-        user: '614660823@qq.com',
-        pass: 'gezdopavkshwbbae', // 使用生成的授权码
+        user: '896696554@qq.com',
+        pass: 'wopiwqiocvecbded', // 使用生成的授权码
       },
     });
   }

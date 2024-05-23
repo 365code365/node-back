@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 @Provide()
-export class FileService {
+export default class FileService {
   /**
    * 将 base64 编码的字符串转换为文件并保存到项目的相对路径中
    * @param base64String - base64 编码的字符串
