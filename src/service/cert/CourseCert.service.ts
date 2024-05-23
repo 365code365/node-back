@@ -81,7 +81,7 @@ export class CourseCertService {
       "    },\n" +
       "    {\n" +
       "        \"aproveRole\": \"NYP\",\n" +
-      "        \"aproveRoleName\": \"IMDA\",\n" +
+      "        \"aproveRoleName\": \"Account\",\n" +
       "        \"order\": 6,\n" +
       "        \"status\": \"waiting\",\n" +
       "        \"desc\": \"Waiting to CollectClaim\"\n" +

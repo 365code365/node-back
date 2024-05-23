@@ -59,21 +59,23 @@ export class CourseCertClaimService {
 
       if (certClaimEntity.role.toLowerCase() == applyRuleJson[i].aproveRole.toLowerCase()) {
         if ("Pass" == certClaimEntity.Status) {
+          if (applyRuleJson[i].status == 'finish') {
+            continue
+          }
           applyRuleJson[i].status = "finish"
+
+          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRule.length - 1) {
+            applyRuleJson[i + 1].status = "finish"
+          }
         } else {
+          if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRule.length - 1) {
+            applyRuleJson[i + 1].status = "waiting"
+          }
           applyRuleJson[i].status = "error"
         }
+        break
       }
 
-      if (certClaimEntity.role.toLowerCase() == applyRuleJson[i].aproveRole.toLowerCase()) {
-        if ("Pass" == certClaimEntity.Status && certClaimEntity.role.toLowerCase() == 'account') {
-          applyRuleJson[i].status = "finish"
-          applyRuleJson[i + 1].status = "finish"
-        } else {
-          applyRuleJson[i + 1].status = "waiting"
-          applyRuleJson[i].status = "error"
-        }
-      }
 
     }
     courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
