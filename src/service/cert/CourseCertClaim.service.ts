@@ -50,8 +50,8 @@ export class CourseCertClaimService {
     let applyRuleJson = JSON.parse(applyRule);
     for (let i = 0; i < applyRuleJson.length; i++) {
 
-      if (i > 1) {
-        let status = applyRuleJson[i - 1].aproveRole.toLowerCase();
+      if (i > 0) {
+        let status = applyRuleJson[i - 1].status.toLowerCase();
         if (status == 'waiting' || status == 'error') {
           throw new CustomError(ErrorType.app_error, ErrorCode.app_error)
         }
