@@ -153,8 +153,9 @@ export class UserService {
   }
 
   async gradelist() {
-    let queryBuilder = this.userEntity.createQueryBuilder();
-    let many = await queryBuilder.select().groupBy("Grade").getMany();
+    let queryBuilder = this.userEntity.createQueryBuilder("user");
+    let many = await queryBuilder.select(['Grade'])
+      .where("grade is not null").groupBy("Grade").getRawMany();
     return many;
   }
 }
