@@ -7,7 +7,7 @@ export default class GradeController {
 
   @Inject()
   userService: UserService;
-  @Get("/gradelist")
+  @Get("/gradeList")
   async getGradeList() {
     return this.userService.gradeList();
   }
