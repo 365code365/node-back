@@ -152,7 +152,7 @@ export class UserService {
     await this.userEntity.remove(res)
   }
 
-  async gradelist() {
+  async gradeList() {
     let queryBuilder = this.userEntity.createQueryBuilder("user");
     let many = await queryBuilder.select(['Grade'])
       .where("grade is not null").groupBy("Grade").getRawMany();

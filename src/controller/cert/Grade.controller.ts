@@ -9,6 +9,6 @@ export default class GradeController {
   userService: UserService;
   @Get("/gradelist")
   async getGradeList() {
-    return this.userService.gradelist();
+    return this.userService.gradeList();
   }
 }
