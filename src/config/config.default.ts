@@ -16,10 +16,10 @@ export default {
         dataSource: {
             default: {
                 type: 'mysql',
-                host: '127.0.0.1',
+                host: '47.236.84.125',
                 port: 3306,
                 username: 'root',
-                password: 'root',
+                password: '123@123.com',
                 database: 'FYP',
                 synchronize: false,
                 logging: false,
