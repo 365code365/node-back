@@ -33,12 +33,10 @@ export class CourseCertService {
 
     cert.UserRole = user.Role
 
-    let certRes = await this.courseCertEntity.findOne({
-      where: {
-        TitleOfCertification: cert.TitleOfCertification
-      }
-    })
-    if (certRes) {
+    let count = await this.courseCertEntity.createQueryBuilder()
+      .where("TitleOfCertification=:TitleOfCertification",
+        {TitleOfCertification: cert.TitleOfCertification}).getCount()
+    if (count > 0) {
       throw new CustomError(ErrorType.has_exist, ErrorCode.has_exist);
     }
 
@@ -123,6 +121,6 @@ export class CourseCertService {
 
   async getDetail(cert: CourseCertEntity) {
     let queryBuilder = this.courseCertEntity.createQueryBuilder();
-    return  await queryBuilder.where("ID=:id", {id: cert.ID}).getOne();
+    return await queryBuilder.where("ID=:id", {id: cert.ID}).getOne();
   }
 }
