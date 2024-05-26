@@ -33,10 +33,10 @@ export class CourseCertService {
 
     cert.UserRole = user.Role
 
-    let count = await this.courseCertEntity.createQueryBuilder()
+    let count = await this.courseCertEntity.createQueryBuilder().select(['count(1)'])
       .where("TitleOfCertification=:TitleOfCertification",
-        {TitleOfCertification: cert.TitleOfCertification}).getCount()
-    if (count > 0) {
+        {TitleOfCertification: cert.TitleOfCertification}).getOne()
+    if (count) {
       throw new CustomError(ErrorType.has_exist, ErrorCode.has_exist);
     }
 
