@@ -39,4 +39,7 @@ export class CourseCertEntity {
   @Column()
   applyRule: string
 
+  @Column()
+  UserlD: string
+
 }
