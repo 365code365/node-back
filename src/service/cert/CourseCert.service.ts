@@ -100,7 +100,7 @@ export class CourseCertService {
   async list(cert: any) {
 
     return await this.courseCertEntity.findBy({
-      UserID: cert.UserlD
+      UserID: cert.UserID
     })
   }
 
