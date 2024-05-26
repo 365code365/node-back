@@ -127,6 +127,8 @@ export class CourseCertClaimService {
 
 
     }
+    courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
+    this.courseCertClaimRepository.save(courseCertClaimEntity)
   }
 
   async getDetail(certClaimEntity: CourseCertClaimEntity) {
