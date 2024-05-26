@@ -16,7 +16,7 @@ export default {
         dataSource: {
             default: {
                 type: 'mysql',
-                host: '13.212.37.145',
+                host: '47.236.84.125',
                 port: 3306,
                 username: 'root',
                 password: '123@123.com',
