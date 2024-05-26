@@ -38,6 +38,8 @@ export class CourseCertClaimService {
     courseCertClaim.ID = uuidv4()
     courseCertClaim.Status = 'Pending'
     courseCertClaim.applyRule = certEntity.applyRule
+    let userEntity = await this.getGradeByUserId(certEntity.UserlD);
+    courseCertClaim.grade = userEntity.Grade;
     await this.courseCertClaimRepository.save(courseCertClaim);
 
     return 'create success'
@@ -45,6 +47,15 @@ export class CourseCertClaimService {
 
 
   async updateCertClaimEntity(certClaimEntity: CourseCertClaimEntity) {
+    if (certClaimEntity.UserID) {
+      await this.approveStudent(certClaimEntity);
+    } else {
+      await this.approveGrade(certClaimEntity);
+    }
+    return 'update success'
+  }
+
+  private async approveStudent(certClaimEntity: CourseCertClaimEntity) {
     let courseCertClaimEntity = await this.getDetail(certClaimEntity);
     courseCertClaimEntity.Remark = certClaimEntity.Remark
     let applyRule = courseCertClaimEntity.applyRule;
@@ -84,7 +95,7 @@ export class CourseCertClaimService {
             for (let j = 0; j < documentEntities.length; j++) {
               let fileName = "attachments_" + j + ".jpg";
 
-              let filePath = await fileService.saveBase64ToFile("data:image/png;base64,"+documentEntities[j].FileContent, fileName);
+              let filePath = await fileService.saveBase64ToFile("data:image/png;base64," + documentEntities[j].FileContent, fileName);
               arr.push({
                 filename: fileName,
                 path: filePath
@@ -116,10 +127,6 @@ export class CourseCertClaimService {
 
 
     }
-    // courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
-    // await this.courseCertClaimRepository.save(courseCertClaimEntity);
-
-    return 'update success'
   }
 
   async getDetail(certClaimEntity: CourseCertClaimEntity) {
@@ -174,5 +181,31 @@ export class CourseCertClaimService {
 
 
     return arr
+  }
+
+  private async approveGrade(certClaimEntity: CourseCertClaimEntity) {
+    let grade = certClaimEntity.grade;
+
+    let queryBuilder = this.userEntityRepository.createQueryBuilder();
+    let rawMany = await queryBuilder.where("Grade=:grade", {grade: grade}).getRawMany();
+    let number = await this.countStudentApplyCountByGrade(certClaimEntity.grade);
+    if (number<rawMany.length){
+      throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
+    }
+
+    for (let i = 0; i < rawMany.length; i++) {
+      certClaimEntity.UserID = rawMany[i].ID
+      this.approveStudent(certClaimEntity);
+    }
+
+  }
+
+  async getGradeByUserId(userId: string) {
+    return await this.userEntityRepository.createQueryBuilder().where("ID=:id", {id: userId}).getOne();
+  }
+
+  async countStudentApplyCountByGrade(grade: string) {
+    let queryBuilder = this.courseCertClaimRepository.createQueryBuilder();
+    return await queryBuilder.where("grade=:grade", {grade: grade}).getCount();
   }
 }

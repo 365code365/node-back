@@ -30,4 +30,10 @@ export class CourseCertClaimEntity {
    */
   role: string
 
+  /**
+   * role
+   */
+  @Column()
+  grade: string
+
 }
