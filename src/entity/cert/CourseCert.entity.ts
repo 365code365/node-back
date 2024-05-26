@@ -8,7 +8,7 @@ export class CourseCertEntity {
   @PrimaryColumn()
   ID: string
   @Column()
-  UserlD: string
+  UserID: string
   @Column()
   UserRole: string
   @Column()

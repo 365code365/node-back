@@ -27,7 +27,7 @@ export class CourseCertService {
 
     let user = await this.userEntityRepository.findOne({
       where: {
-        UserID: cert.UserlD
+        UserID: cert.UserID
       }
     });
 
@@ -100,7 +100,7 @@ export class CourseCertService {
   async list(cert: any) {
 
     return await this.courseCertEntity.findBy({
-      UserlD: cert.UserlD
+      UserID: cert.UserlD
     })
   }
 

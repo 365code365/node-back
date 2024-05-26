@@ -38,7 +38,7 @@ export class CourseCertClaimService {
     courseCertClaim.ID = uuidv4()
     courseCertClaim.Status = 'Pending'
     courseCertClaim.applyRule = certEntity.applyRule
-    let userEntity = await this.getGradeByUserId(certEntity.UserlD);
+    let userEntity = await this.getGradeByUserId(courseCertClaim.UserID);
     courseCertClaim.grade = userEntity.Grade;
     await this.courseCertClaimRepository.save(courseCertClaim);
 
@@ -201,7 +201,7 @@ export class CourseCertClaimService {
   }
 
   async getGradeByUserId(userId: string) {
-    return await this.userEntityRepository.createQueryBuilder().where("ID=:id", {id: userId}).getOne();
+    return await this.userEntityRepository.createQueryBuilder().where("UserID=:UserID", {UserID: userId}).getOne();
   }
 
   async countStudentApplyCountByGrade(grade: string) {
