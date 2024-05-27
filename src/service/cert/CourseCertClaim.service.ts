@@ -48,14 +48,14 @@ export class CourseCertClaimService {
 
   async updateCertClaimEntity(certClaimEntity: CourseCertClaimEntity) {
     if (certClaimEntity.UserID) {
-      await this.approveStudent(certClaimEntity);
+      await this.approveStudent(certClaimEntity, true);
     } else {
       await this.approveGrade(certClaimEntity);
     }
     return 'update success'
   }
 
-  private async approveStudent(certClaimEntity: CourseCertClaimEntity) {
+  private async approveStudent(certClaimEntity: CourseCertClaimEntity, stuFlag: boolean) {
     let courseCertClaimEntity = await this.getDetail(certClaimEntity);
     courseCertClaimEntity.Remark = certClaimEntity.Remark
     let applyRule = courseCertClaimEntity.applyRule;
@@ -94,7 +94,9 @@ export class CourseCertClaimService {
             });
 
             console.log('many', documentEntities)
-            await this.sendMail(documentEntities, [userEntities], 'yangrd1107@gmail.com');
+            if (stuFlag) {
+              await this.sendMail(documentEntities, [userEntities], 'yangrd1107@gmail.com');
+            }
           }
 
           if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRuleJson.length - 2) {
@@ -217,9 +219,27 @@ export class CourseCertClaimService {
 
     for (let i = 0; i < rawMany.length; i++) {
       certClaimEntity.UserID = rawMany[i].UserID
-      this.approveStudent(certClaimEntity);
+      this.approveStudent(certClaimEntity, false);
     }
 
+    if (certClaimEntity.Status == "Pass") {
+      let userArr = []
+      let documentArr = []
+      for (let i = 0; i < rawMany.length; i++) {
+        let UserID = rawMany[i].UserID
+        let userEntity = await this.userEntityRepository.findOne({
+          where: {
+            UserID: UserID
+          }
+        });
+        userArr.push(userEntity)
+
+        let documentEntities = await this.documentEntityRepository.find({where: {UserID: UserID,
+            ClaimID:certClaimEntity.CourseAndCertificationID}});
+        documentArr = [...documentEntities]
+      }
+      this.sendMail(documentArr, userArr, "yangrd1107@gmail.com")
+    }
   }
 
   async getGradeByUserId(userId: string) {
