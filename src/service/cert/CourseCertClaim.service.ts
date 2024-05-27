@@ -78,7 +78,6 @@ export class CourseCertClaimService {
           applyRuleJson[i].status = "finish"
 
           if (applyRuleJson[i].aproveRoleName == 'IMDA') {
-            let mailer: EmailService = new EmailService()
 
 
             let selectQueryBuilder = this.documentEntityRepository.createQueryBuilder();
@@ -87,30 +86,15 @@ export class CourseCertClaimService {
                 ClaimID: certClaimEntity.CourseAndCertificationID,
                 UserID: certClaimEntity.UserID
               }).getMany();
+
+            let userEntities = await this.userEntityRepository.findOne({
+              where: {
+                UserID: certClaimEntity.UserID
+              }
+            });
+
             console.log('many', documentEntities)
-
-            let fileService = new FileService();
-
-            let arr = []
-            for (let j = 0; j < documentEntities.length; j++) {
-              let fileName = "attachments_" + j + ".jpg";
-
-              let filePath = await fileService.saveBase64ToFile("data:image/png;base64," + documentEntities[j].FileContent, fileName);
-              arr.push({
-                filename: fileName,
-                path: filePath
-              })
-            }
-
-
-            const mailOptions = {
-              from: '896696554@qq.com',
-              to: 'yangrd1107@gmail.com',
-              subject: 'this attachments',
-              text: 'this attachments',
-              attachments: arr,
-            };
-            mailer.sendMail(mailOptions)
+            await this.sendMail(documentEntities, [userEntities], 'yangrd1107@gmail.com');
           }
 
           if (certClaimEntity.role.toLowerCase() == 'nyp' && i == applyRuleJson.length - 2) {
@@ -129,6 +113,37 @@ export class CourseCertClaimService {
     }
     courseCertClaimEntity.applyRule = JSON.stringify(applyRuleJson)
     this.courseCertClaimRepository.save(courseCertClaimEntity)
+  }
+
+  async sendMail(documentEntities: DocumentEntity[], userEntities: UserEntity[], toMail) {
+    let mailer = new EmailService();
+    let fileService = new FileService();
+
+    let arr = []
+    for (let j = 0; j < documentEntities.length; j++) {
+      let fileName = "attachments_" + j + ".jpg";
+      let filePath = await fileService.saveBase64ToFile("data:image/png;base64," + documentEntities[j].FileContent, fileName);
+      arr.push({
+        filename: fileName,
+        path: filePath
+      })
+    }
+    let desc = ""
+    for (let i = 0; i < userEntities.length; i++) {
+      desc = desc + "\n" + "Name:" + userEntities[i].FullName + "\n" +
+        "Grade:" + userEntities[i].Grade + "\n" +
+        "Email:" + userEntities[i].Email + "\n" +
+        "Gender:" + userEntities[i].Gender + "\n"
+    }
+
+    const mailOptions = {
+      from: '896696554@qq.com',
+      to: toMail,
+      subject: 'this attachments',
+      text: "Approve Pass Student \n" + desc,
+      attachments: arr,
+    };
+    mailer.sendMail(mailOptions)
   }
 
   async getDetail(certClaimEntity: CourseCertClaimEntity) {
