@@ -73,6 +73,6 @@ export class CourseCertClaimController {
       arr.push(userEntities)
     }
 
-    return this.courseCertClaimService.sendMail(documentEntities, arr, "614660823@qq.com")
+    return this.courseCertClaimService.sendMail(documentEntities, arr, "yangrd1107@gmail.com")
   }
 }
