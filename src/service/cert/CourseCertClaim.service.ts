@@ -160,8 +160,10 @@ export class CourseCertClaimService {
   async getListById(courseCertClaim: CourseCertClaimEntity) {
     let list = await this.courseCertClaimRepository.createQueryBuilder().where(
       "CourseAndCertificationID=:courseId and grade=:grade",
-      {courseId:courseCertClaim.CourseAndCertificationID,
-              grade:courseCertClaim.grade}).getRawMany()
+      {
+        courseId: courseCertClaim.CourseAndCertificationID,
+        grade: courseCertClaim.grade
+      }).getRawMany()
 
     let arr = []
     for (let i = 0; i < list.length; i++) {
@@ -190,7 +192,7 @@ export class CourseCertClaimService {
     let queryBuilder = this.userEntityRepository.createQueryBuilder().select(["UserID"]);
     let rawMany = await queryBuilder.where("Grade=:grade", {grade: grade}).getRawMany();
     let number = await this.countStudentApplyCountByGrade(certClaimEntity.grade);
-    if (number<rawMany.length){
+    if (number < rawMany.length) {
       throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
     }
 
@@ -208,5 +210,27 @@ export class CourseCertClaimService {
   async countStudentApplyCountByGrade(grade: string) {
     let queryBuilder = this.courseCertClaimRepository.createQueryBuilder();
     return await queryBuilder.where("grade=:grade", {grade: grade}).getCount();
+  }
+
+  async getGradeProcess(courseCertClaim: CourseCertClaimEntity) {
+    let courseCertClaimEntities = await this.courseCertClaimRepository.find({
+      where: {
+        grade: courseCertClaim.grade
+      }
+    });
+
+    for (let i = 0; i < courseCertClaimEntities.length; i++) {
+      let applyRule = courseCertClaimEntities[i].applyRule;
+      let arr = JSON.parse(applyRule);
+      for (let j = 0; j < arr.length; j++) {
+        if ( arr[i]['aproveRole']=='Teacher'){
+          if (arr[i]['status']=='waiting'||arr[i]['status']=='reject'){
+            throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
+          }
+        }
+      }
+    }
+
+    return courseCertClaimEntities;
   }
 }

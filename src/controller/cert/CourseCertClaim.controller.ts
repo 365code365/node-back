@@ -35,4 +35,9 @@ export class CourseCertClaimController {
   async getListById(@Body() courseCertClaim: CourseCertClaimEntity) {
      return this.courseCertClaimService.getListById(courseCertClaim)
   }
+
+  @Post('/getGradeProcess')
+  async getGradeProcess(@Body() courseCertClaim: CourseCertClaimEntity) {
+     return this.courseCertClaimService.getGradeProcess(courseCertClaim)
+  }
 }
