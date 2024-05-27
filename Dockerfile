@@ -12,6 +12,8 @@ RUN git clone https://github.com/365code365/node-back.git .
 
 # 替换 "username/repository.git" 为实际的 GitHub 仓库地址
 
+RUN npm config set registry https://registry.npmmirror.com
+
 # 安装依赖项
 RUN npm install
 
