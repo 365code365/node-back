@@ -55,7 +55,7 @@ export class CourseCertClaimService {
     return 'update success'
   }
 
-  private async approveStudent(certClaimEntity: CourseCertClaimEntity, stuFlag: boolean) {
+  async approveStudent(certClaimEntity: CourseCertClaimEntity, stuFlag: boolean) {
     let courseCertClaimEntity = await this.getDetail(certClaimEntity);
     courseCertClaimEntity.Remark = certClaimEntity.Remark
     let applyRule = courseCertClaimEntity.applyRule;
@@ -207,19 +207,20 @@ export class CourseCertClaimService {
     return arr
   }
 
-  private async approveGrade(certClaimEntity: CourseCertClaimEntity) {
+  async approveGrade(certClaimEntity: CourseCertClaimEntity) {
     let grade = certClaimEntity.grade;
 
     let queryBuilder = this.userEntityRepository.createQueryBuilder().select(["UserID"]);
     let rawMany = await queryBuilder.where("Grade=:grade", {grade: grade}).getRawMany();
     let number = await this.countStudentApplyCountByGrade(certClaimEntity.grade);
-    if (number < rawMany.length) {
-      throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
-    }
+    // if (number < rawMany.length) {
+    //   throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
+    // }
+    console.log('', number)
 
     for (let i = 0; i < rawMany.length; i++) {
       certClaimEntity.UserID = rawMany[i].UserID
-      this.approveStudent(certClaimEntity, false);
+      await  this.approveStudent(certClaimEntity, false);
     }
 
     if (certClaimEntity.Status == "Pass") {
@@ -234,8 +235,12 @@ export class CourseCertClaimService {
         });
         userArr.push(userEntity)
 
-        let documentEntities = await this.documentEntityRepository.find({where: {UserID: UserID,
-            ClaimID:certClaimEntity.CourseAndCertificationID}});
+        let documentEntities = await this.documentEntityRepository.find({
+          where: {
+            UserID: UserID,
+            ClaimID: certClaimEntity.CourseAndCertificationID
+          }
+        });
         documentArr = [...documentEntities]
       }
       this.sendMail(documentArr, userArr, "yangrd1107@gmail.com")
