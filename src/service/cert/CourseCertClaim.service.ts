@@ -213,18 +213,17 @@ export class CourseCertClaimService {
   }
 
   async getGradeProcess(courseCertClaim: CourseCertClaimEntity) {
-    let courseCertClaimEntities = await this.courseCertClaimRepository.find({
-      where: {
-        grade: courseCertClaim.grade
-      }
-    });
+    let courseCertClaimEntities = await this.courseCertClaimRepository
+      .createQueryBuilder()
+      .select(['applyRule','grade'])
+      .where("grade=:grade",{grade:courseCertClaim.grade}).getRawMany();
 
     for (let i = 0; i < courseCertClaimEntities.length; i++) {
       let applyRule = courseCertClaimEntities[i].applyRule;
       let arr = JSON.parse(applyRule);
       for (let j = 0; j < arr.length; j++) {
-        if ( arr[i]['aproveRole']=='Teacher'){
-          if (arr[i]['status']=='waiting'||arr[i]['status']=='reject'){
+        if (arr[j]['aproveRole'].toString() == 'Teacher') {
+          if (arr[j]['status'] == 'waiting' || arr[j]['status'] == 'reject') {
             throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
           }
         }
