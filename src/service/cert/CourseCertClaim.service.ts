@@ -215,8 +215,8 @@ export class CourseCertClaimService {
   async getGradeProcess(courseCertClaim: CourseCertClaimEntity) {
     let courseCertClaimEntities = await this.courseCertClaimRepository
       .createQueryBuilder()
-      .select(['applyRule','grade'])
-      .where("grade=:grade",{grade:courseCertClaim.grade}).getRawMany();
+      .select(['applyRule', 'grade'])
+      .where("grade=:grade", {grade: courseCertClaim.grade}).getRawMany();
 
     for (let i = 0; i < courseCertClaimEntities.length; i++) {
       let applyRule = courseCertClaimEntities[i].applyRule;
