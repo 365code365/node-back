@@ -158,7 +158,8 @@ export class CourseCertClaimService {
   }
 
   async getListById(courseCertClaim: CourseCertClaimEntity) {
-    let list = await this.courseCertClaimRepository.createQueryBuilder().where(
+    let list = await this.courseCertClaimRepository.createQueryBuilder()
+      .select(['grade','UserID']).where(
       "CourseAndCertificationID=:courseId and grade=:grade",
       {
         courseId: courseCertClaim.CourseAndCertificationID,
@@ -229,7 +230,10 @@ export class CourseCertClaimService {
         }
       }
     }
+    if (courseCertClaimEntities.length == 0) {
+      throw new CustomError(ErrorType.empty_approve, ErrorCode.empty_approve)
+    }
 
-    return courseCertClaimEntities;
+    return courseCertClaimEntities[0];
   }
 }
