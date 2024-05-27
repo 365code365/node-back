@@ -15,6 +15,7 @@ export enum ErrorCode {
   app_error = '5011',
   cannot_batch_approve = '5012',
   empty_approve = '5013',
+  sys_error = '500'
 }
 
 export enum ErrorType {
@@ -30,4 +31,5 @@ export enum ErrorType {
   app_error = 'approve result reject or waiting',
   cannot_batch_approve = 'Cannot approve, there are students pending approval.',
   empty_approve = 'empty approve',
+  sys_error = 'sys_error',
 }

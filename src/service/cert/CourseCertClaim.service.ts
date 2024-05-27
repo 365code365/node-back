@@ -143,6 +143,9 @@ export class CourseCertClaimService {
     if (courseCertClaimEntity) {
       list = await this.documentEntityRepository.find({where: {ClaimID: courseCertClaimEntity.CourseAndCertificationID}});
     }
+    if (list.length == 0) {
+      throw new CustomError(ErrorType.sys_error, ErrorCode.sys_error)
+    }
 
     let userEntity = await this.userEntityRepository.findOne({where: {UserID: certClaimEntity.UserID}});
 
@@ -159,12 +162,12 @@ export class CourseCertClaimService {
 
   async getListById(courseCertClaim: CourseCertClaimEntity) {
     let list = await this.courseCertClaimRepository.createQueryBuilder()
-      .select(['grade','UserID']).where(
-      "CourseAndCertificationID=:courseId and grade=:grade",
-      {
-        courseId: courseCertClaim.CourseAndCertificationID,
-        grade: courseCertClaim.grade
-      }).getRawMany()
+      .select(['grade', 'UserID']).where(
+        "CourseAndCertificationID=:courseId and grade=:grade",
+        {
+          courseId: courseCertClaim.CourseAndCertificationID,
+          grade: courseCertClaim.grade
+        }).getRawMany()
 
     let arr = []
     for (let i = 0; i < list.length; i++) {
