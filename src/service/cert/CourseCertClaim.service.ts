@@ -158,11 +158,10 @@ export class CourseCertClaimService {
   }
 
   async getListById(courseCertClaim: CourseCertClaimEntity) {
-    let list = await this.courseCertClaimRepository.find({
-      where: {
-        CourseAndCertificationID: courseCertClaim.CourseAndCertificationID
-      }
-    });
+    let list = await this.courseCertClaimRepository.createQueryBuilder().where(
+      "CourseAndCertificationID=:courseId and grade=:grade",
+      {courseId:courseCertClaim.CourseAndCertificationID,
+              grade:courseCertClaim.grade}).getRawMany()
 
     let arr = []
     for (let i = 0; i < list.length; i++) {
