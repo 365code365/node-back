@@ -187,7 +187,7 @@ export class CourseCertClaimService {
   private async approveGrade(certClaimEntity: CourseCertClaimEntity) {
     let grade = certClaimEntity.grade;
 
-    let queryBuilder = this.userEntityRepository.createQueryBuilder();
+    let queryBuilder = this.userEntityRepository.createQueryBuilder().select(["UserID"]);
     let rawMany = await queryBuilder.where("Grade=:grade", {grade: grade}).getRawMany();
     let number = await this.countStudentApplyCountByGrade(certClaimEntity.grade);
     if (number<rawMany.length){
@@ -195,7 +195,7 @@ export class CourseCertClaimService {
     }
 
     for (let i = 0; i < rawMany.length; i++) {
-      certClaimEntity.UserID = rawMany[i].ID
+      certClaimEntity.UserID = rawMany[i].UserID
       this.approveStudent(certClaimEntity);
     }
 
