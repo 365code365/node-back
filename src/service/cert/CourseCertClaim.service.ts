@@ -215,9 +215,9 @@ export class CourseCertClaimService {
     let queryBuilder = this.userEntityRepository.createQueryBuilder().select(["UserID"]);
     let rawMany = await queryBuilder.where("Grade=:grade", {grade: grade}).getRawMany();
     let number = await this.countStudentApplyCountByGrade(certClaimEntity.grade);
-    // if (number < rawMany.length) {
-    //   throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
-    // }
+    if (number < rawMany.length) {
+      throw new CustomError(ErrorType.cannot_batch_approve, ErrorCode.cannot_batch_approve)
+    }
     console.log('', number)
 
     for (let i = 0; i < rawMany.length; i++) {
