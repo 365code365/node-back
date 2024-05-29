@@ -158,7 +158,9 @@ export class CourseCertClaimService {
     let courseCertClaimEntity = await queryBuilder.getOne();
     let list = []
     if (courseCertClaimEntity) {
-      list = await this.documentEntityRepository.find({where: {ClaimID: courseCertClaimEntity.CourseAndCertificationID}});
+      list = await this.documentEntityRepository.find({where:
+          {ClaimID: courseCertClaimEntity.CourseAndCertificationID,
+            UserID:certClaimEntity.UserID}});
     }
     if (list.length == 0) {
       throw new CustomError(ErrorType.sys_error, ErrorCode.sys_error)
