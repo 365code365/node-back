@@ -19,6 +19,8 @@
     "@midwayjs/typeorm": "^3.0.0",
     "@midwayjs/upload": "^3.15.11",
     "@midwayjs/validate": "^3.12.0",
+    "adm-zip": "^0.5.12",
+    "archiver": "^7.0.1",
     "class-transformer": "^0.5.1",
     "google-auth-library": "^9.10.0",
     "googleapis": "^137.1.0",

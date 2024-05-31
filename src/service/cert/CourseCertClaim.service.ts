@@ -9,6 +9,9 @@ import {CustomError} from "../../exception/CustomError";
 import {ErrorCode, ErrorType} from "../../constant/ErrorCode";
 import EmailService from "../../util/Mailer";
 import FileService from "../../util/FileService";
+import * as AdmZip from 'adm-zip';
+import * as path from 'path';
+
 
 const {v4: uuidv4} = require('uuid');
 
@@ -138,12 +141,17 @@ export class CourseCertClaimService {
         "Gender:" + userEntities[i].Gender + "\n"
     }
 
+    let newVar = await this.compressFiles(arr);
+    console.log('sss', newVar)
     const mailOptions = {
       from: '896696554@qq.com',
       to: toMail,
       subject: 'this attachments',
       text: "Approve Pass Student \n" + desc,
-      attachments: arr,
+      attachments: [{
+        filename: "compressed.zip",
+        path: newVar
+      }],
     };
     mailer.sendMail(mailOptions)
   }
@@ -158,9 +166,13 @@ export class CourseCertClaimService {
     let courseCertClaimEntity = await queryBuilder.getOne();
     let list = []
     if (courseCertClaimEntity) {
-      list = await this.documentEntityRepository.find({where:
-          {ClaimID: courseCertClaimEntity.CourseAndCertificationID,
-            UserID:certClaimEntity.UserID}});
+      list = await this.documentEntityRepository.find({
+        where:
+          {
+            ClaimID: courseCertClaimEntity.CourseAndCertificationID,
+            UserID: certClaimEntity.UserID
+          }
+      });
     }
     if (list.length == 0) {
       throw new CustomError(ErrorType.sys_error, ErrorCode.sys_error)
@@ -222,7 +234,7 @@ export class CourseCertClaimService {
 
     for (let i = 0; i < rawMany.length; i++) {
       certClaimEntity.UserID = rawMany[i].UserID
-      await  this.approveStudent(certClaimEntity, false);
+      await this.approveStudent(certClaimEntity, false);
     }
 
     if (certClaimEntity.Status == "Pass") {
@@ -280,5 +292,23 @@ export class CourseCertClaimService {
     }
 
     return courseCertClaimEntities[0];
+  }
+
+  async compressFiles(arr) {
+    const zip = new AdmZip();
+
+    arr.forEach(file => {
+      zip.addLocalFile(file.path, '', file.filename);
+    });
+
+    const zipFileName = path.join(this.getProjectDir(), 'compressed.zip');
+    zip.writeZip(zipFileName);
+
+    return zipFileName;
+  }
+
+  private getProjectDir(): string {
+    // 在 MidwayJS 中，应用根目录可以通过 process.cwd() 获取
+    return process.cwd();
   }
 }
