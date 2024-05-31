@@ -126,7 +126,10 @@ export class CourseCertClaimService {
 
     let arr = []
     for (let j = 0; j < documentEntities.length; j++) {
-      let fileName = "attachments_" + j + ".jpg";
+
+      let userEntity = await this.userEntityRepository.findOne({where: {UserID: documentEntities[j].UserID}});
+
+      let fileName = "attachments_" + j + userEntity.FullName + ".jpg";
       let filePath = await fileService.saveBase64ToFile("data:image/png;base64," + documentEntities[j].FileContent, fileName);
       arr.push({
         filename: fileName,
