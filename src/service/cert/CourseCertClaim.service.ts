@@ -84,7 +84,8 @@ export class CourseCertClaimService {
 
 
             let selectQueryBuilder = this.documentEntityRepository.createQueryBuilder();
-            let documentEntities = await selectQueryBuilder.where("ClaimID=:ClaimID and UserID=:UserID",
+            let documentEntities = await selectQueryBuilder
+              .where("ClaimID=:ClaimID and UserID=:UserID",
               {
                 ClaimID: certClaimEntity.CourseAndCertificationID,
                 UserID: certClaimEntity.UserID
@@ -258,7 +259,9 @@ export class CourseCertClaimService {
             ClaimID: certClaimEntity.CourseAndCertificationID
           }
         });
-        documentArr = [...documentEntities]
+        documentEntities.forEach(item=>{
+          documentArr.push(item)
+        })
       }
       this.sendMail(documentArr, userArr, "yangrd1107@gmail.com")
     }
