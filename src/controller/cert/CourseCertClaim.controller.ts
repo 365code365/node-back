@@ -56,15 +56,19 @@ export class CourseCertClaimController {
   async sendMail() {
     let selectQueryBuilder = this.documentEntityRepository.createQueryBuilder();
 
-    let documentEntities = await selectQueryBuilder.where("ClaimID=:ClaimID and UserID=:UserID",
+    const userIds = [
+      "12a3e14f-0e39-466f-a804-eac5c876c241",
+       "c55c2069-763c-4b33-b544-7abc9b05380e"
+    ];
+    let documentEntities = await selectQueryBuilder.where("ClaimID = :ClaimID AND UserID IN (:...userIds)",
       {
-        ClaimID: "7b06cda3-98ff-4a97-bf8e-145bf3d045c4",
-        UserID: "e7ffbfb5-40b6-4874-a29f-dd055429bcfe"
+        ClaimID: "c2e892a2-86e9-4abf-bba7-dd98e4647d77",
+        userIds: userIds
       }).getMany();
 
     let userEntities = await this.userEntityRepository.findOne({
       where: {
-        UserID: "e7ffbfb5-40b6-4874-a29f-dd055429bcfe"
+        UserID: "c55c2069-763c-4b33-b544-7abc9b05380e"
       }
 
     });
